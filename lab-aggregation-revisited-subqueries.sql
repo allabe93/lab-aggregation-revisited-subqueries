@@ -23,14 +23,15 @@ join sakila.film using (film_id)
 join sakila.film_category using (film_id)
 join sakila.category ca using (category_id)
 where ca.name = 'Action'
-group by first_name, last_name, email;
+group by full_name, email;
 
 -- Write the query using sub queries with multiple WHERE clause and IN condition
-select concat(first_name,' ',last_name) as `Full Name`, email
+select concat(first_name,' ',last_name) as full_name, email
 from sakila.customer where customer_id in (select rental_id from sakila.rental
 where rental_id in (select inventory_id from sakila.inventory where inventory_id in
 (select film_id from sakila.film_category where category_id in (select category_id 
-from sakila.category where name = 'Action'))));
+from sakila.category where name = 'Action'))))
+group by full_name, email;
 
 -- Verify if the above two queries produce the same results or not
 -- No, they do not produce the same results: using sub queries with multiple WHERE clause and IN condition produces substantially fewer results in comparisson to using multiple joins. 
