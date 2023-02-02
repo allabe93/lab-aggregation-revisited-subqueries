@@ -22,7 +22,8 @@ join sakila.inventory using (inventory_id)
 join sakila.film using (film_id)
 join sakila.film_category using (film_id)
 join sakila.category ca using (category_id)
-where ca.name = 'Action';
+where ca.name = 'Action'
+group by first_name, last_name, email;
 
 -- Write the query using sub queries with multiple WHERE clause and IN condition
 select concat(first_name,' ',last_name) as `Full Name`, email
